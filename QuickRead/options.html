@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickRead Settings</title>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-width: 380px;
+            min-height: 280px;
+            background: white;
+            color: #222;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ---------- Background Blobs ---------- */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.7;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .blob.pink {
+            width: 300px;
+            height: 220px;
+            top: -80px;
+            left: -80px;
+            background: radial-gradient(circle,
+                    rgba(255, 105, 180, 0.6),
+                    rgba(255, 165, 0, 0.4),
+                    transparent 70%);
+        }
+
+        .blob.blue {
+            width: 260px;
+            height: 180px;
+            bottom: -60px;
+            right: -60px;
+            background: radial-gradient(circle,
+                    rgba(100, 180, 255, 0.6),
+                    rgba(180, 100, 255, 0.4),
+                    transparent 70%);
+        }
+
+        /* ---------- Foreground Content ---------- */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            margin-bottom: 16px;
+            font-size: 1.6rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4285f4;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        p {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: #4285f4;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3367d6;
+        }
+
+        #status {
+            margin-top: 10px;
+            color: green;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background -->
+    <div class="blob pink"></div>
+    <div class="blob blue"></div>
+
+    <!-- Content -->
+    <div class="content">
+        <h1>QuickRead Settings</h1>
+
+        <div class="form-group">
+            <label for="apiKey">Gemini API Key</label>
+            <input type="text" id="apiKey" placeholder="Enter your Gemini API key" />
+            <p>
+                Get your API key from
+                <a href="https://makersuite.google.com/app/apikey" target="_blank">
+                    Google MakerSuite
+                </a>
+            </p>
+        </div>
+
+        <button id="saveBtn">Save</button>
+        <div id="status">Saved successfully</div>
+    </div>
+
+    <script src="option.js"></script>
+</body>
+
+</html>

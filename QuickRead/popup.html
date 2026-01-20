@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QuickRead</title>
+    <style>
+        body {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            padding: 10px;
+            font-family: system-ui, sans-serif;
+            overflow: hidden;
+        }
+
+        #blob,
+        #blob1 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.9;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #blob {
+            top: -40px;
+            left: -80px;
+            width: 320px;
+            height: 220px;
+            background: radial-gradient(circle,
+                    rgba(255, 106, 162, 0.6),
+                    rgba(255, 154, 60, 0.5),
+                    rgba(255, 211, 106, 0.4),
+                    transparent 70%);
+        }
+
+        #blob1 {
+            bottom: -40px;
+            right: -80px;
+            width: 220px;
+            height: 120px;
+            background: radial-gradient(circle,
+                    rgba(102, 204, 255, 0.6),
+                    rgba(255, 106, 162, 0.5),
+                    rgba(255, 211, 106, 0.4),
+                    transparent 70%);
+        }
+
+        h2,
+        select,
+        button,
+        pre {
+            position: relative;
+            z-index: 1;
+        }
+
+        select,
+        button {
+            margin-top: 10px;
+            padding: 6px 10px;
+            background: black;
+            color: white;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #result {
+            width: 350px;
+            height: 230px;
+            overflow: auto;
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            background: white;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .loader {
+            width: 30px;
+            height: 30px;
+            border: 4px solid #eee;
+            border-top: 4px solid black;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        p.note {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>QuickRead</h2>
+    <div id="blob"></div>
+
+    <select id="summary-type">
+        <option value="brief">Brief</option>
+        <option value="detailed">Detailed</option>
+        <option value="bullets">Bullet points</option>
+    </select>
+
+    <button id="summarize">Summarize</button>
+    <button id="copy-btn">Copy</button>
+
+    <pre id="result">Select a type to summarize</pre>
+    <p class="note">If a page is blocked, you may need to paste text manually.</p>
+
+    <div id="blob1"></div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
