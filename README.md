@@ -3,7 +3,7 @@ QuickRead is a chrome extension that summarizes text on websites  for you . It p
 
 ## Advantages:
 
-  1) Can also summarize text in different languages.
+  1) Can also summarize text easily.
 
   2) Takes less time.[As one has to read the entire page]
   
