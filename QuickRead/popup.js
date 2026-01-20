@@ -2,7 +2,8 @@ document.getElementById("summarize").addEventListener("click", async () => {
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = '<div class="loading"><div class="loader"></div></div>';
 
-    const summaryType = document.getElementById("summary-type").value;
+    // Medium-length summary
+    const summaryType = "concise";
 
     // Get API key from storage
     chrome.storage.sync.get(["geminiApiKey"], async (result) => {
@@ -25,14 +26,14 @@ document.getElementById("summarize").addEventListener("click", async () => {
                 // If page blocks content scripts
                 if (chrome.runtime.lastError || !res || !res.text) {
                     const userText = prompt(
-                        "This page blocks automatic text extraction.\nPlease paste the text you want to summarize:"
+                        "This page blocks automatic text extraction.\nPlease paste the text you want summarized:"
                     );
                     if (!userText || userText.trim().length < 20) {
                         resultDiv.innerText = "No text provided for summarization.";
                         return;
                     }
                     try {
-                        const summary = await getGeminiSummary(userText, summaryType, apiKey);
+                        const summary = await getGeminiSummary(userText, apiKey, summaryType);
                         resultDiv.innerText = summary;
                     } catch (error) {
                         resultDiv.innerText = "Error generating summary. Try again.";
@@ -47,7 +48,7 @@ document.getElementById("summarize").addEventListener("click", async () => {
 
                 // Normal summarization
                 try {
-                    const summary = await getGeminiSummary(res.text, summaryType, apiKey);
+                    const summary = await getGeminiSummary(res.text, apiKey, summaryType);
                     resultDiv.innerText = summary;
                 } catch (error) {
                     resultDiv.innerText = "Error generating summary. Try again.";
@@ -71,23 +72,14 @@ document.getElementById("copy-btn").addEventListener("click", () => {
         .catch(err => console.error("Failed to copy text:", err));
 });
 
-async function getGeminiSummary(text, summaryType, apiKey) {
-    const maxLength = 20000;
+async function getGeminiSummary(text, apiKey, summaryType) {
+    const maxLength = 100000; // Increase truncation limit
     const truncated = text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 
-    let prompt;
-    switch (summaryType) {
-        case "brief":
-            prompt = `Provide a brief summary in 2-3 sentences:\n\n${truncated}`;
-            break;
-        case "detailed":
-            prompt = `Provide a detailed summary, covering all key points:\n\n${truncated}`;
-            break;
-        case "bullets":
-            prompt = `Summarize in 5-7 key points. Each line starts with "- ":\n\n${truncated}`;
-            break;
-        default:
-            prompt = `Summarize the following text:\n\n${truncated}`;
+    // Longer concise summary prompt
+    let prompt = "";
+    if (summaryType === "concise") {
+        prompt = `Provide a detailed but concise summary of the following article in 6-10 sentences, covering all the main points clearly without unnecessary repetition:\n\n${truncated}`;
     }
 
     try {
@@ -98,7 +90,10 @@ async function getGeminiSummary(text, summaryType, apiKey) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: { temperature: 0.2, maxOutputTokens: 500 },
+                    generationConfig: {
+                        temperature: 0.3,
+                        maxOutputTokens: 5000, // Increase max tokens for longer summary
+                    },
                 }),
             }
         );
