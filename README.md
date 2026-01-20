@@ -1,8 +1,5 @@
 # QuickRead
-QuickRead is a chrome extension that summarizes text on websites  for you .
-It provides 2 types of summarization:
-  1) Brief
-  2) Detailed
+QuickRead is a chrome extension that summarizes text on websites  for you . It provides a comprized summarization of the detailed text present in a page
 
 
 ## Limitations:
