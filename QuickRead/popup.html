@@ -12,8 +12,10 @@
             padding: 10px;
             font-family: system-ui, sans-serif;
             overflow: hidden;
+            background: white;
         }
 
+        /* Background blobs */
         #blob,
         #blob1 {
             position: absolute;
@@ -48,23 +50,28 @@
                     transparent 70%);
         }
 
+        /* Foreground content */
         h2,
-        select,
         button,
-        pre {
+        pre,
+        p.note {
             position: relative;
             z-index: 1;
         }
 
-        select,
         button {
             margin-top: 10px;
-            padding: 6px 10px;
+            padding: 6px 12px;
             background: black;
             color: white;
             border-radius: 6px;
             border: 1px solid #ccc;
             cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background: #333;
         }
 
         #result {
@@ -103,6 +110,7 @@
         p.note {
             font-size: 0.8rem;
             color: #666;
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -111,17 +119,11 @@
     <h2>QuickRead</h2>
     <div id="blob"></div>
 
-    <select id="summary-type">
-        <option value="brief">Brief</option>
-        <option value="detailed">Detailed</option>
-        <option value="bullets">Bullet points</option>
-    </select>
-
     <button id="summarize">Summarize</button>
     <button id="copy-btn">Copy</button>
 
-    <pre id="result">Select a type to summarize</pre>
-    <p class="note">If a page is blocked, you may need to paste text manually.</p>
+    <pre id="result">Click "Summarize" to generate a brief summary</pre>
+    <p class="note">If a page blocks extraction, you may need to paste text manually.</p>
 
     <div id="blob1"></div>
     <script src="popup.js"></script>
